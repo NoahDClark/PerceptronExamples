@@ -71,3 +71,33 @@ def generateBoards(boards, boardBrightness, current = 0, array=None):
         generateBoards(boards,boardBrightness,(current),temp)
         generateBoards(boards,boardBrightness,(current+1),temp2)
         
+#Settings for the perceptron and batch size
+sampleSize = 10
+inputSize = 4
+learningRate = 0.01
+percep = perceptron(inputSize, learningRate)
+
+#Creates the training values and testing values
+boards = []
+boardBrightnessValues = []
+generateBoards(boards,boardBrightnessValues)
+temp = random.sample(range(0,16), sampleSize)
+inputArray = []
+outputArray = []
+for i in temp:
+    inputArray.append(boards[i])
+    outputArray.append(boardBrightnessValues[i])
+inputArray = np.array(inputArray)
+outputArray = np.array(outputArray)
+
+#Train perceptron
+percep.train(inputArray, outputArray, 1000)
+
+#Prints total accuracy & prediction for each given inputs
+total = 0
+for (inputVals, targetVals) in zip(boards, boardBrightnessValues):
+    p = percep.predict(inputVals)
+    if (targetVals[0] == p):
+        total = total+1
+    print("Data: {}, Target: {}, Prediction: {}".format(inputVals,targetVals[0],p))
+print("ACCURACY: " + str((total/16)*100)+"%")
