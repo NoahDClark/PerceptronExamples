@@ -72,7 +72,7 @@ def generateBoards(boards, boardBrightness, current = 0, array=None):
         generateBoards(boards,boardBrightness,(current+1),temp2)
         
 #Settings for the perceptron and batch size
-sampleSize = 10
+sampleSize = 12
 inputSize = 4
 learningRate = 0.01
 percep = perceptron(inputSize, learningRate)
